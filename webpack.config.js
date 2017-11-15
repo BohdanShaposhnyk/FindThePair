@@ -36,10 +36,13 @@ let config = {
             {
                 test: /\.less$/,
                 use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-                    use: ['css-loader', 'less-loader', 'postcss-loader'],
+                    use: [
+                        'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+                        'less-loader',
+                        'postcss-loader'
+                    ],
                     fallback: 'style-loader',
                 })),
-
             },
             {
                 test: /\.jsx$/,
