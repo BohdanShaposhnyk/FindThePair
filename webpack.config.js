@@ -9,7 +9,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssets = require('optimize-css-assets-webpack-plugin');
 
 let config = {
-    entry: './src/index.js',
+    entry: './src/App.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
