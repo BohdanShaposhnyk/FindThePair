@@ -15,13 +15,13 @@ export default `
         </div>
     </div>
     <div class="${menu.dropdown}">
-        <button class="${menu.dropbtn}" id="deckSizeBtn"">5x5
+        <button class="${menu.dropbtn}" id="deckSizeBtn"">5X5
             <i class="fa fa-caret-down"</i>
         </button>
         <div class = "${menu.dropdown_content}" id="deckSizeList">
-            <a href="#">8x8</a>
-            <a href="#">10x10</a>
-            <a href="#">12x12</a>
+            <a href="#">8X8</a>
+            <a href="#">10X10</a>
+            <a href="#">12X12</a>
         </div>
     </div>
     <a href="#">HIGHSCORES</a>
