@@ -29,22 +29,22 @@ export default function menu(props) {
     const sizesList = constructSizesList(formattedDeckSize);
 
     return `
-<div class="${menuStyle.topnav}" id="topNav">
-    <div class="${menuStyle.dropdown}">
-        <button class="${menuStyle.dropbtn}" id="deckStyleBtn">APPEARANCE
-        </button>
-        <div class = "${menuStyle.dropdown_content}" id="deckStyleList">
-            ${listToLinklist(stylesList)}
-        </div>
-    </div>
-    <div class="${menuStyle.dropdown}">
-        <button class="${menuStyle.dropbtn}" id="deckSizeBtn"">${formattedDeckSize}
-        </button>
-        <div class = "${menuStyle.dropdown_content}" id="deckSizeList">
-            ${listToLinklist(sizesList)}
-        </div>
-    </div>
-    <a href="#">HIGHSCORES</a>
-</div>
-`;
+            <div class="${menuStyle.topnav}" id="topNav">
+                <div class="${menuStyle.dropdown}">
+                    <button class="${menuStyle.dropbtn}" id="deckStyleBtn">APPEARANCE
+                    </button>
+                    <div class = "${menuStyle.dropdown_content}" id="deckStyleList">
+                        ${listToLinklist(stylesList)}
+                    </div>
+                </div>
+                <div class="${menuStyle.dropdown}">
+                    <button class="${menuStyle.dropbtn}" id="deckSizeBtn"">${formattedDeckSize}
+                    </button>
+                    <div class = "${menuStyle.dropdown_content}" id="deckSizeList">
+                        ${listToLinklist(sizesList)}
+                    </div>
+                </div>
+                <a href="#">HIGHSCORES</a>
+            </div>
+            `;
 }
