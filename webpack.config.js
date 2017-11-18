@@ -22,7 +22,8 @@ let config = {
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.less', '.css', '.jpeg', '.jpg', '.gif', '.png'],
         alias: {
-            images: path.resolve(__dirname, 'src/assets/images')
+            Images: path.resolve(__dirname, 'src/assets/images'),
+            Styles: path.resolve(__dirname, 'src/assets/styles')
         }
     },
 
