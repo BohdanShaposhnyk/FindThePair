@@ -6,10 +6,10 @@ import menuStyle from 'Styles/menu.less'
 export default function menu(props) {
 
     const stylesList = props.stylesList.slice();
-    const formattedDeckSize = `${props.currentSize}X${props.currentSize}`;//5,8,10 etc.
-    const sizesList = constructSizesList(formattedDeckSize);
+    const formattedDeckSize = formatSize(props.currentSize);//5,8,10 etc.
+    const sizesList = constructSizesList(formattedDeckSize, props.sizesList);
 
-    return `
+    const html = `
             <div class="${menuStyle.topnav}" id="topNav">
                 <div class="${menuStyle.dropdown}">
                     <button class="${menuStyle.dropbtn}" id="deckStyleBtn">APPEARANCE
@@ -28,6 +28,9 @@ export default function menu(props) {
                 <a href="#">HIGHSCORES</a>
             </div>
         `;
+    const template = document.createElement('template'); //is not supported by IE
+    template.innerHTML = html;
+    return document.importNode(template.content, true);
 }
 
 function listToLinklist (list) {
@@ -40,11 +43,14 @@ function listToLinklist (list) {
     return res;
 }
 
-function constructSizesList(currentSize) {
+function formatSize(rawSize) {
     "use strict";
-    let DECK_SIZES = [
-        '5X5', '8X8', '10X10', '12X12'
-    ];
+    return `${rawSize} PAIRS`;
+}
+
+function constructSizesList(currentSize, sizesList) {
+    "use strict";
+    let DECK_SIZES = sizesList.map((current) => {return formatSize(current);});
     DECK_SIZES.splice(DECK_SIZES.indexOf(currentSize), 1);
     return DECK_SIZES;
 }

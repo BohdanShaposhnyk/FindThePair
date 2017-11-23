@@ -10,5 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const parent = document.getElementById('root');
     parent.className = style.root;
     const main = new Main();
-    parent.innerHTML = main.render();
+ //   parent.innerHTML = main.render();
+    parent.appendChild(main.render());
 });
