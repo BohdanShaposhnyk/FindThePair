@@ -23,7 +23,10 @@ let config = {
         extensions: ['.js', '.jsx', '.json', '.less', '.css', '.jpeg', '.jpg', '.gif', '.png'],
         alias: {
             Images: path.resolve(__dirname, 'src/assets/images'),
-            Styles: path.resolve(__dirname, 'src/assets/styles')
+            Styles: path.resolve(__dirname, 'src/assets/styles'),
+            View : path.resolve(__dirname, 'src/js/view'),
+            Controller : path.resolve(__dirname, 'src/js/controller'),
+            Routers : path.resolve(__dirname, 'src/js/assets_routers')
         }
     },
 
