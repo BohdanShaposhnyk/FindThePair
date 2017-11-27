@@ -4,6 +4,7 @@
 import Component from './Component'
 import Card from './Card'
 import Styles from 'Styles'
+import Skins from 'Skins'
 
 export default class Board extends Component{
     constructor(props) {
@@ -25,7 +26,7 @@ export default class Board extends Component{
     }
 
     _getClassesNeeded(cardOrBoard) {
-        const styleFile = Styles[this.state.currentStyle.id];
+        const styleFile = Skins[this.state.currentStyle.id];
         const sizeName = cardOrBoard + this.state.currentSize;
         return [
                 Styles.board[cardOrBoard],
@@ -35,6 +36,7 @@ export default class Board extends Component{
     }
 
     render() {
+        console.log(Styles);
         const res = document.createElement('div');
         res.classList.add(...this._getClassesNeeded('board'));
         this._createCardsDOM().forEach(card => {res.appendChild(card);});

@@ -26,7 +26,9 @@ let config = {
             Styles: path.resolve(__dirname, 'src/assets/styles'),
             View : path.resolve(__dirname, 'src/js/view'),
             Controller : path.resolve(__dirname, 'src/js/controller'),
-            Utils : path.resolve(__dirname, 'src/js/utils')
+            Utils : path.resolve(__dirname, 'src/js/utils'),
+            Skins : path.resolve(__dirname, 'src/assets/styles/skins'),
+            Logic : path.resolve(__dirname, 'src/js/logic')
         }
     },
 
