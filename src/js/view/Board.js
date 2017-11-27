@@ -1,10 +1,10 @@
+
 /**
  * Created by bohdan on 20.11.2017.
  */
 import Component from './Component'
-import Card from './Card'
+import Card from 'View/Card'
 import Styles from 'Styles'
-import Skins from 'Skins'
 
 export default class Board extends Component{
     constructor(props) {
@@ -14,32 +14,31 @@ export default class Board extends Component{
 
     _createCardsDOM() {
         const cardsDOM = [];
-        for (let i = 0; i < this.state.cards.length; i++) {
+        for (let i = 0; i < this.state.deck.length; i++) {
             cardsDOM.push(Card({
                 id : i,
-                value : this.state.cards[i],
+                value : this.state.deck[i],
                 onClick : () => {this.state.onClick(i)},
-                styles : this._getClassesNeeded('card')
+                layout : this._getClassesNeeded('card')
             }));
         }
         return cardsDOM;
     }
 
     _getClassesNeeded(cardOrBoard) {
-        const styleFile = Skins[this.state.currentStyle.id];
-        const sizeName = cardOrBoard + this.state.currentSize;
+        const sizeName = cardOrBoard + this.state.layout.currentSize;
         return [
-                Styles.board[cardOrBoard],
-                Styles.sizes[sizeName],
-                styleFile[cardOrBoard],
-            ];
+            Styles.board[cardOrBoard],
+            Styles.sizes[sizeName],
+            this.state.layout.currentSkin[cardOrBoard],
+        ];
     }
 
     render() {
-        console.log(Styles);
-        const res = document.createElement('div');
-        res.classList.add(...this._getClassesNeeded('board'));
-        this._createCardsDOM().forEach(card => {res.appendChild(card);});
-        return res;
+        const me = document.createElement('div');
+        me.id = 'board';
+        me.classList.add(...this._getClassesNeeded('board'));
+        this._createCardsDOM().forEach(card => {me.appendChild(card);});
+        this._insert(me);
     }
 }

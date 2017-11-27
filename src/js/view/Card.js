@@ -1,3 +1,4 @@
+
 /**
  * Created by bohdan on 23.11.2017.
  */
@@ -6,7 +7,7 @@ export default function card(props) {
     Card.onclick = () => {props.onClick();};
     Card.id = props.id;
     Card.value = props.value;
-    Card.innerHTML = Card.id;
-    Card.classList.add(...props.styles);
+    Card.innerHTML = Card.value;
+    Card.classList.add(...props.layout);
     return Card;
 }

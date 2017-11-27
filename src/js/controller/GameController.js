@@ -2,15 +2,10 @@
  * Created by bohdan on 25.11.2017.
  */
 
-import GameView from 'View/Main2'
+import GameView from 'View/Main'
 import Skins from 'Skins'
 import GameLogic from 'Logic/GameLogic'
 import Styles from 'Styles'
-
-
-
-
-import DEFAULT_GAME_PROPS from 'Utils/DEFAULT_GAME_PROPS'
 
 
 export default class GameController {
@@ -21,7 +16,8 @@ export default class GameController {
         this.handlers = {
             changeSizeHandler : (newSize) => {this.changeSizeHandler(newSize);},
             changeSkinHandler : (newSkin) => {this.changeSkinHandler(newSkin);},
-            cardClickHandler : (index) => {this.cardClickHandler(index);}
+            cardClickHandler : (index) => {this.cardClickHandler(index);},
+            highscoresClickHandler : () => {this.highscoresClickHandler();}
         };
         this._resetGame();
     }
@@ -43,12 +39,11 @@ export default class GameController {
     }
 
     changeSkinHandler(newSkin) {
-        this.layout.currentSkin = newSkin;
-        this._resetGame();
-        this.start();
+        this.layout.currentSkin = Skins[newSkin];
+        this.gameView.update({layout : this.layout});
     }
 
-    onHighscoresClick() {
+    highscoresClickHandler() {
         console.log('highscores');
     }
 

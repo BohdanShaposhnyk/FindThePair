@@ -1,3 +1,4 @@
+
 /**
  * Created by bohdan on 18.11.2017.
  */
@@ -33,9 +34,9 @@ export default function menu(props) {
         `;
     const template = document.createElement('template'); //is not supported by IE
     template.innerHTML = html;
-    const res = document.importNode(template.content, true);
-    const styleListSelector = res.querySelector('#deckStyleList');
-    const sizeListSelector = res.querySelector('#deckSizeList');
+    const me = document.importNode(template.content, true);
+    const styleListSelector = me.querySelector('#deckStyleList');
+    const sizeListSelector = me.querySelector('#deckSizeList');
     stylesDOM.forEach( (item) => {
         "use strict";
         styleListSelector.appendChild(item);
@@ -44,8 +45,12 @@ export default function menu(props) {
         "use strict";
         sizeListSelector.appendChild(item);
     } );
-    res.querySelector('#topNav').appendChild(highscores);
-    return res;
+    me.querySelector('#topNav').appendChild(highscores);
+    const inDOM = props.parent.querySelector(`#${me.id}`);
+    if (inDOM) {
+        props.parent.replaceChild(me,inDOM);
+    } else props.parent.appendChild(me);
+//    return me;
 
 }
 
@@ -56,8 +61,8 @@ function listToLinklist (list, idBase, handlers) {
         let node = document.createElement('a');
         switch (idBase) {
             case 'style':
-                node.id = idBase + elem.id;
-                node.innerHTML = elem.name;
+                node.id = elem;
+                node.innerHTML = elem;
                 node.onclick = () => {handlers.onStyleChange(elem);};
                 break;
             case 'size':

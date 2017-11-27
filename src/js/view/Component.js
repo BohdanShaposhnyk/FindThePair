@@ -14,8 +14,9 @@ export default class Component {
     }
 
     _insert(me) {
-        if (this.state.parent.querySelector(`#${me.id}`)) {
-            this.state.parent.replaceChild(me,this.state.parent.firstChild);
+        const inDOM = this.state.parent.querySelector(`#${me.id}`);
+        if (inDOM) {
+            this.state.parent.replaceChild(me,inDOM);
         } else this.state.parent.appendChild(me);
     }
 
