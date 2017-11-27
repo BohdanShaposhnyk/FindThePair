@@ -26,7 +26,7 @@ let config = {
             Styles: path.resolve(__dirname, 'src/assets/styles'),
             View : path.resolve(__dirname, 'src/js/view'),
             Controller : path.resolve(__dirname, 'src/js/controller'),
-            Routers : path.resolve(__dirname, 'src/js/assets_routers')
+            Utils : path.resolve(__dirname, 'src/js/utils')
         }
     },
 

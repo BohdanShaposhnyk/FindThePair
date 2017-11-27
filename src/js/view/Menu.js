@@ -8,7 +8,6 @@ export default function menu(props) {
     const stylesList = props.stylesList.slice();
     const formattedDeckSize = formatSize(props.currentSize);//5,8,10 etc.
     const sizesList = constructSizesList(props.currentSize, props.sizesList);
-    console.log(stylesList);
     const stylesDOM = listToLinklist(stylesList, 'style', props.handlers);
     const sizesDOM = listToLinklist(sizesList, 'size', props.handlers);
     const highscores = document.createElement('a');

@@ -7,6 +7,6 @@ export default function card(props) {
     Card.id = props.id;
     Card.value = props.value;
     Card.innerHTML = Card.id;
-    Card.className = props.styles;
+    Card.classList.add(...props.styles);
     return Card;
 }
