@@ -15,11 +15,16 @@ export default class Board extends Component{
     _createCardsDOM() {
         const cardsDOM = [];
         for (let i = 0; i < this.state.deck.length; i++) {
+            const layout = this._getClassesNeeded('card');
+            if (this.state.deck[i] === null) {
+                console.log('in hide');
+                layout.push(Styles.board.hide);
+            }
             cardsDOM.push(Card({
                 id : i,
                 value : this.state.deck[i],
                 onClick : () => {this.state.onClick(i)},
-                layout : this._getClassesNeeded('card')
+                layout : layout
             }));
         }
         return cardsDOM;

@@ -40,7 +40,8 @@ export default class GameController {
 
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = Skins[newSkin];
-        this.gameView.update({layout : this.layout});
+       // this.gameView.update({layout : this.layout});
+        this.updateView({layout : this.layout});
     }
 
     highscoresClickHandler() {
@@ -54,9 +55,12 @@ export default class GameController {
         console.log(cards);
         this.cardsSelected.push(index);
         if (this.cardsSelected.length == 2) {
-            this.gameLogic.makeMove(...this.cardsSelected);
+            if (this.gameLogic.makeMove(...this.cardsSelected)) {
+                this.updateView({deck : this.gameLogic.deck});
+            }
             this.cardsSelected = [];
         }
+
     }
 
 

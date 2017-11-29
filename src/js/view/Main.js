@@ -19,7 +19,7 @@ export default class GameView extends Component{
         this.menu = Menu;
     }
 
-    getMenuProps(parent) {
+    _getMenuProps(parent) {
         return {
             parent: parent,
             stylesList : Object.keys(this.state.layout.skins),
@@ -36,7 +36,7 @@ export default class GameView extends Component{
     render() {
         const me = document.createElement('div');
         me.id = 'app_container';
-        this.menu(this.getMenuProps(me));
+        this.menu(this._getMenuProps(me));
         this.board.state.parent = me;
         this.board.render();
         this._insert(me);
