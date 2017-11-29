@@ -1,0 +1,19 @@
+
+@keyframes cardSpin {
+  from {transform: rotateY(0deg);}
+  to {transform: rotateY(-180deg);}
+}
+
+.spin {
+  animation-name: cardSpin;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+}
+
+.spin_back {
+  animation-name: cardSpin;
+  animation-timing-function: ease-in;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+  animation-direction: reverse;
+}

@@ -1,7 +1,9 @@
-
+@board-width: 70vw;
+@board-rate: 4/7;
 .board {
+  perspective: 200vw;
   width: 70vw;
-  height: 40vw;
+  height: @board-width * @board-rate;
   margin: 2vw auto;
   display: grid;
   justify-items: center;
@@ -10,9 +12,38 @@
 }
 
 .card {
-  border: 1px solid #f9f9f9;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  border: 3px solid white;
+
 }
 
 .hide {
   visibility: hidden;
+}
+
+.front, .back {
+
+  width: inherit;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  & p {
+    color: aquamarine;
+
+  }
+}
+
+.front {
+  background-color: darkslategray;
+  transform: rotateY(-180deg);
+}
+
+.back {
+  background-color: aquamarine;
+  z-index: 2;
+  transform: rotateY(0deg);
 }

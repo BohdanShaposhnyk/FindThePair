@@ -5,7 +5,7 @@
 import GameView from 'View/Main'
 import Skins from 'Skins'
 import GameLogic from 'Logic/GameLogic'
-import Styles from 'Styles'
+import GAME_STATES from 'Logic/GAME_STATES'
 
 
 export default class GameController {
@@ -23,12 +23,14 @@ export default class GameController {
     }
 
     _resetGame() {
+        this.cardsSelected = [];
         this.gameLogic = new GameLogic(this.layout.currentSize * 2);
         this.gameView = new GameView({
             layout: this.layout,
             deck: this.gameLogic.deck,
             parent: this.parent,
-            handlers : this.handlers
+            handlers : this.handlers,
+            cardsSelected : this.cardsSelected.slice()
         });
     }
 
@@ -40,27 +42,44 @@ export default class GameController {
 
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = Skins[newSkin];
-       // this.gameView.update({layout : this.layout});
-        this.updateView({layout : this.layout});
+        this.updateView({layout : this.layout, cardsSelected : this.cardsSelected});
     }
 
     highscoresClickHandler() {
         console.log('highscores');
     }
 
-
     cardClickHandler(index) {
-        console.log(`clicked ${index} card`);
-        const cards = this.gameLogic.deck.slice();
-        console.log(cards);
-        this.cardsSelected.push(index);
-        if (this.cardsSelected.length == 2) {
-            if (this.gameLogic.makeMove(...this.cardsSelected)) {
-                this.updateView({deck : this.gameLogic.deck});
-            }
-            this.cardsSelected = [];
-        }
+        if (this.cardsSelected.indexOf(index) !== -1) return;
+        const selected = this.cardsSelected.length;
+        const newBoardState = {};
+        switch (selected) {
+            case 0:
+                this.cardsSelected.push(index);
+                newBoardState.gameState = GAME_STATES.ONE_SELECTED;
+                newBoardState.cardsSelected = this.cardsSelected.slice();
+                this.gameView.board.updateCard(newBoardState);
+                break;
+            case 1:
+                this.cardsSelected.push(index);
+                newBoardState.cardsSelected = this.cardsSelected.slice();
+                newBoardState.gameState = this.gameLogic.makeMove(...this.cardsSelected);
 
+                this.cardsSelected = [];
+                this.gameView.board.updateCard(newBoardState);
+                break;
+        }
+        // if (this.cardsSelected.length < 2 && this.cardsSelected[0] != index) this.cardsSelected.push(index);
+        //
+        // this.gameView.board.updateCard({cardsSelected : this.cardsSelected}, index);
+        // if (this.cardsSelected.length == 2) {
+        //     if (this.gameLogic.makeMove(...this.cardsSelected)) {
+        //         setTimeout(() => {this.gameView.board.updateCard({deck : this.gameLogic.deck, cardsSelected : this.cardsSelected}, index);}, 500);
+        //     }
+        //     this.cardsSelected = [];
+        //     //TODO: Get rid of this
+        //     this.gameView.board.updateCard({cardsSelected : this.cardsSelected}, index);
+        // }
     }
 
 

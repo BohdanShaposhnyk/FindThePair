@@ -4,7 +4,7 @@
 import Component from './Component'
 import Board from 'View/Board'
 import Menu from 'View/Menu'
-
+import GAME_STATES from 'Logic/GAME_STATES'
 
 
 export default class GameView extends Component{
@@ -14,6 +14,7 @@ export default class GameView extends Component{
         this.board = new Board({
             layout: this.state.layout,
             deck: this.state.deck,
+            cardsSelected : this.state.cardsSelected.slice(),
             onClick : (index) => {this.state.handlers.cardClickHandler(index);}
         });
         this.menu = Menu;
@@ -33,12 +34,23 @@ export default class GameView extends Component{
         };
     }
 
+    _getBoardProps(){
+        return {
+            layout: this.state.layout,
+            deck: this.state.deck,
+            cardsSelected : this.state.cardsSelected.slice(),
+            onClick : (index) => {this.state.handlers.cardClickHandler(index);},
+            gameState : GAME_STATES.NO_SELECTION
+        };
+    }
+
     render() {
+
         const me = document.createElement('div');
         me.id = 'app_container';
         this.menu(this._getMenuProps(me));
         this.board.state.parent = me;
-        this.board.render();
+        this.board.update(this._getBoardProps());
         this._insert(me);
     }
 }

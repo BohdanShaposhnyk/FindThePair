@@ -1,17 +1,16 @@
 /**
  * Created by bohdan on 27.11.2017.
  */
+import STATES from './GAME_STATES'
 
 export default class GameLogic {
     constructor(deckSize) {
         this.deckSize = deckSize;
         this.deck = this._initDeck();
-
     }
 
     _initDeck() {
         const size = this.deckSize;
-        const usedValues = {};
         const deck = new Array(size).fill(null);
         for (let i = 0, j = 0; i < size; i +=2, j++) {
             deck[i] = j;
@@ -30,10 +29,10 @@ export default class GameLogic {
         if (this.deck[i1] !==null && this.deck[i1] == this.deck[i2] && i1 !== i2) {
             this.deck[i2] = this.deck[i1] = null;
             console.log('success');
-            return true;
+            return STATES.WIN;
         } else {
             console.log('failure');
-            return false;
+            return STATES.LOSE;
         }
     }
 
