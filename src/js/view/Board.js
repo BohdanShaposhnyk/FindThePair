@@ -136,11 +136,9 @@ export default class Board extends Component{
     }
 
     render() {
-        console.log('render board');
         this.me.className = '';
         this.me.classList.add(...this._getClassesNeeded('board'));
         this.me.classList.add(this.state.layout.currentSkin['board']);
-        console.log(`classes: ${this.me.classList}`);
         this.cardsDOM = this._createCardsDOM();
         for (let i=0; i < this.state.deck.length; i++) {
             this.renderCard(i);

@@ -5,6 +5,7 @@ import Component from './Component'
 import Board from 'View/Board'
 import Menu from 'View/Menu'
 import GAME_STATES from 'Logic/GAME_STATES'
+import Timer from 'View/Timer'
 
 
 export default class GameView extends Component{
@@ -18,6 +19,7 @@ export default class GameView extends Component{
             onClick : (index) => {this.state.handlers.cardClickHandler(index);}
         });
         this.menu = Menu;
+        this.timer = new Timer();
     }
 
     _getMenuProps(parent) {
@@ -45,10 +47,12 @@ export default class GameView extends Component{
     }
 
     render() {
-
+        console.log('main');
         const me = document.createElement('div');
         me.id = 'app_container';
         this.menu(this._getMenuProps(me));
+        this.timer.update({parent : me.querySelector('#topNav')});
+        this.timer.start();
         this.board.state.parent = me;
         this.board.update(this._getBoardProps());
         this._insert(me);

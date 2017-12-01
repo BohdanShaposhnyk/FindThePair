@@ -8,6 +8,7 @@ import GameLogic from 'Logic/GameLogic'
 import GAME_STATES from 'Logic/GAME_STATES'
 
 
+
 export default class GameController {
     constructor(parent) {//, model
         this.cardsSelected = [];
@@ -42,6 +43,7 @@ export default class GameController {
 
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = Skins[newSkin];
+        console.log('change');
         this.updateView({layout : this.layout, cardsSelected : this.cardsSelected});
     }
 
@@ -69,19 +71,7 @@ export default class GameController {
                 this.gameView.board.updateCard(newBoardState);
                 break;
         }
-        // if (this.cardsSelected.length < 2 && this.cardsSelected[0] != index) this.cardsSelected.push(index);
-        //
-        // this.gameView.board.updateCard({cardsSelected : this.cardsSelected}, index);
-        // if (this.cardsSelected.length == 2) {
-        //     if (this.gameLogic.makeMove(...this.cardsSelected)) {
-        //         setTimeout(() => {this.gameView.board.updateCard({deck : this.gameLogic.deck, cardsSelected : this.cardsSelected}, index);}, 500);
-        //     }
-        //     this.cardsSelected = [];
-        //     //TODO: Get rid of this
-        //     this.gameView.board.updateCard({cardsSelected : this.cardsSelected}, index);
-        // }
     }
-
 
     start() {
         this.gameView.render();
@@ -102,6 +92,4 @@ export default class GameController {
             currentSize : defaultSize,
         };
     }
-
-
 }
