@@ -7,6 +7,7 @@
   border: 1px solid black;
   &:hover {
     text-shadow: 0 0 8px cyan, 0 0 14px cyan;
+    background-color: darken(#333, 2%) !important;
   }
 }
 
@@ -24,8 +25,32 @@
   grid-column: 3;
 }
 
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: rgba(31,31,31,0.2);
+  text-shadow: 0 0 0;
+  width: inherit;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  padding: 1vw 1.5vw;
+  z-index: 1;
+  & div {
+    &:hover {
+      text-shadow: 0 0 8px cyan, 0 0 14px cyan;
+      background-color: darken(rgba(31,31,31,0.4), 2%) !important;
+    }
+  }
+}
+
 .skin_change_container {
   grid-column: 4;
+  position: relative;
+
+  &:hover {
+    & .dropdown {
+      display: block;
+    }
+  }
 }
 
 .highscores_container {

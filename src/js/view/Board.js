@@ -69,7 +69,7 @@ export default class Board extends Component{
                 break;
             case GAME_STATES.GAME_FINISHED:
                 this.onWinningMove();
-                setTimeout( () => {alert('WINNER!');}, 1000 );
+     //           setTimeout( () => {alert('WINNER!');}, 1000 );
                 break;
             case GAME_STATES.WIN:
                 this.onWinningMove();

@@ -11,15 +11,48 @@ export default class Timer extends Component {
         super(props, tag);
         this._applyStylesFromObj({timer : layout.timer});
         this.children = this.initChildren();
+        this.screen = this.getTimerStructure();
+        this.time = new Date();
         this.reset();
+        this.timer = null;
 
     }
 
+    getTimerStructure() {
+        return {
+            display : this.children.display.me,
+            m1 : this.children.display.children.m1.me,
+            m2 : this.children.display.children.m2.me,
+            s1 : this.children.display.children.s1.me,
+            s2 : this.children.display.children.s2.me
+        }
+    }
+
+    drawTime() {
+        this.screen.s2.innerHTML = this.time.getSeconds()%10;
+        this.screen.s1.innerHTML = Math.floor(this.time.getSeconds()/10);
+        this.screen.m2.innerHTML = this.time.getMinutes()%10;
+        this.screen.m1.innerHTML = Math.floor(this.time.getMinutes()/10);
+    }
+
+    updateTime() {
+        this.time.setTime(this.time.getTime() + 1000);
+        this.drawTime(this.time);
+    }
+
+    start() {
+        clearInterval(this.timer);
+        this.timer = setInterval( () => {this.updateTime();}, 1000 );
+    }
+
+    stop() {
+        clearInterval(this.timer);
+    }
+
+
     reset() {
-        this.children.display.children.m1.me.innerHTML = 0;
-        this.children.display.children.m2.me.innerHTML = 0;
-        this.children.display.children.s1.me.innerHTML = 0;
-        this.children.display.children.s2.me.innerHTML = 0;
+        this.time.setTime(0);
+        this.drawTime();
     }
 
     initChildren() {

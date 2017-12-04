@@ -16,7 +16,7 @@ export default class Main extends Component {
         this.children = this.initChildren();
 
         this._applyStylesFromObj(layout);
-        this._applyStylesFromObj({ bg : this.state.layout.currentSkin.bg});
+
     }
 
     boardProps() {
@@ -43,7 +43,9 @@ export default class Main extends Component {
             handlers : {
                 changeSkin : this.state.handlers.changeSkin,
                 newGameMenuClick : this.state.handlers.newGameMenuClick
-            }
+            },
+            skinsList : this.state.layout.skins,
+            currentSkin : this.state.layout.currentSkin
         }
     }
 
@@ -61,10 +63,6 @@ export default class Main extends Component {
         }
     }
 
-    timerProps() {
-
-    }
-
     initChildren() {
         const children =  {
             board : new Board(this.boardProps()),
@@ -76,11 +74,18 @@ export default class Main extends Component {
         return children;
     }
 
-    getBoardProps() {
+    clearBgSkin() {
+        Object.values(this.state.layout.skins).forEach( (skin) => {
+            if (this.me.classList.contains(skin.bg)) {
+                this.me.classList.remove(skin.bg);
+            }
+        } );
 
     }
 
     render() {
+        this.clearBgSkin();
+        this._applyStylesFromObj({ bg : this.state.layout.currentSkin.bg});
         this.updateChildren();
         this._insert();
     }

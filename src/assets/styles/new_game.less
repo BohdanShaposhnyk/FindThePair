@@ -1,5 +1,8 @@
+@main_color: #77ffff;
+
 .modal_bg {
   position: fixed;
+  overflow: auto;
   z-index: 1;
   left: 0;
   top: 0;
@@ -9,16 +12,17 @@
 }
 
 .modal_container {
+  padding: 1vw;
   letter-spacing: 1em;
   word-spacing: 1.5em;
   font-family: Courier New, serif;
   font-size: 2vw;
-  color: #77ffff;
+  color: @main_color;
   background-color: rgba(9,20,20,1);
   margin: 10% auto;
-  border: 3px solid #77ffff;
+  border: 3px solid @main_color;
   width: 50vw;
-  height: 30vw;
+  height: 35vw;
   border-radius: 1vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -30,7 +34,9 @@
 }
 
 .skins, .sizes {
-  letter-spacing: 0.8vw;
+  color: darken(@main_color, 50%);
+  letter-spacing: 0.5vw;
+  word-spacing: 0.1vw;
   font-size: 1.5vw;
   display: flex;
   padding-top: 10%;
@@ -39,22 +45,26 @@
   align-items: stretch;
   justify-items: flex-start;
   justify-content: flex-start;
-  border-right: 2px solid #77ffff;
+
   margin: 2vw 0 2vw 2vw;
   background-color: transparent;
 }
 
 .skins {
+  border-right: 2px solid @main_color;
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 1;
   & div {
+    color: @main_color;
     position: relative;
     cursor: pointer;
     line-height: 300%;
-    color: #77ffff;
     background-color: transparent;
+    &:hover {
+      text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -62,7 +72,7 @@
       left: 25%;
       width: 50%;
       height: 1px;
-      background-color: #77ffff;
+      background-color: @main_color;
     }
   }
 }
@@ -73,11 +83,14 @@
   grid-row-start: 1;
   grid-row-end: 1;
   & div {
+    color: @main_color;
     position: relative;
     cursor: pointer;
     line-height: 250%;
-    color: #77ffff;
     background-color: transparent;
+    &:hover {
+      text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -85,14 +98,14 @@
       left: 25%;
       width: 50%;
       height: 1px;
-      background-color: #77ffff;
+      background-color: @main_color;
     }
   }
 }
 
 .highscores {
   cursor: pointer;
-  border: 1px solid #77ffff;
+  border: 1px solid @main_color;
   margin: 1vw;
   line-height: 150%;
   border-radius: 1vw;
@@ -101,13 +114,16 @@
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 2;
+  &:hover {
+    text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
+    box-shadow: 0 0 16px 0 @main_color;
+  }
 }
 
 .new_btn {
-  box-shadow: 0 0 0 1px #333;
-  border: 1px solid #77ffff;
+  border: 1px solid @main_color;
   cursor: pointer;
-  line-height: 150%;
+  line-height: 200%;
   margin: 0 1vw 1vw 1vw;
   border-radius: 1vw;
   background-color: transparent;
@@ -115,4 +131,8 @@
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 3;
+  &:hover {
+    text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
+    box-shadow: 0 0 16px 0 @main_color;
+  }
 }

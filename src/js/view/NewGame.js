@@ -25,7 +25,7 @@ export default class NewGame extends Component {
         if (parent.id === IDs.modalInternals.sizes) {
             listValues = this.state.layout.sizes.map( (current) => {
                 const elem = document.createElement('div');
-                elem.innerHTML = `${current}X${current}`;
+                elem.innerHTML = `${current} PAIRS`;
                 elem.value = current;
                 elem.onclick = () => {this.state.handlers.changeSize(elem.value);};
                 return elem;
@@ -55,6 +55,8 @@ export default class NewGame extends Component {
         };
         containerChildren.sizes._applyStylesFromObj({layout : layout.sizes});
         containerChildren.skins._applyStylesFromObj({layout : layout.skins});
+        containerChildren.sizes.me.innerHTML = 'SIZES<br><br>';
+        containerChildren.skins.me.innerHTML = 'SKINS<br><br>';
         this.addBtnList(containerChildren.sizes.me);
         this.addBtnList(containerChildren.skins.me);
         containerChildren.scoresBtn._applyStylesFromObj({layout : layout.highscores});

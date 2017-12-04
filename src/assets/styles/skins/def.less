@@ -1,3 +1,4 @@
+@card-color: rgba(30,30,30,1);
 
 .bg {
   background-color: #222;
@@ -11,5 +12,8 @@
 }
 
 .back {
-  background-color: darkgrey !important;
+  background-color: @card-color !important;
+  &:hover {
+    background-color: lighten(@card-color, 2%) !important;
+  }
 }

@@ -18,6 +18,19 @@ export default class Menu extends Component {
 
     }
 
+    createDropdown() {
+        const ul = document.createElement('div');
+        ul.className = childLayout.dropdown;
+        Object.keys(this.state.skinsList).forEach( (skin) => {
+            const li = document.createElement('div');
+            li.innerHTML = skin;
+            li.onclick = () => {this.state.handlers.changeSkin(this.state.skinsList[skin]);};
+            ul.appendChild(li);
+        });
+        return ul;
+
+    }
+
     initChildren() {
         const children = {
             logo : new Component({id : IDs.menuElems.logo, parent : this.me}),
@@ -37,7 +50,9 @@ export default class Menu extends Component {
     }
 
     render() {
+
         this.renderChildren();
+        this.children.skinChange.me.appendChild(this.createDropdown());
         this._insert();
     }
 }

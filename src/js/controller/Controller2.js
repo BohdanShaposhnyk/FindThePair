@@ -51,6 +51,8 @@ export default class GameController {
         this.cardsSelected = [];
         this.gameLogic = new GameLogic(this.layout.currentSize * 2);
         this.gameView.update(this.getGameViewProps());
+        this.gameView.children.timer.reset();
+        this.gameView.children.timer.start();
     }
 
     _GET_DEFAULT_LAYOUT() {
@@ -81,6 +83,7 @@ export default class GameController {
     }
 
     newGameClickHandler() {
+        if (this.gameView.children.modal.size === 0) return;
         this.gameView.children.modal.hide();
         this.layout.currentSize = this.gameView.children.modal.size;
         this._resetGame();
@@ -105,6 +108,13 @@ export default class GameController {
 
                 this.cardsSelected = [];
                 this.gameView.children.board.updateCard(newBoardState);
+                if (this.gameLogic.state == GAME_STATES.GAME_FINISHED) {
+                    this.gameView.children.timer.stop();
+                    setTimeout( () => {
+                        alert(`WINNER! ${this.gameView.children.timer.time.getMinutes()} minutes,
+                               ${this.gameView.children.timer.time.getSeconds()} seconds!`);
+                    }, 1000 );
+                }
                 break;
         }
     }
