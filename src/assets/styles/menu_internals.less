@@ -1,0 +1,33 @@
+@lineHeight: 150%;
+
+.logo_container, .new_game_container, .skin_change_container, .highscores_container {
+  line-height: @lineHeight;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px #333;
+  border: 1px solid black;
+  &:hover {
+    text-shadow: 0 0 8px cyan, 0 0 14px cyan;
+  }
+}
+
+.logo_container {
+  grid-column: 1;
+}
+
+.new_game_container {
+
+  grid-column: 2;
+
+}
+
+.timer_container{
+  grid-column: 3;
+}
+
+.skin_change_container {
+  grid-column: 4;
+}
+
+.highscores_container {
+  grid-column: 5;
+}

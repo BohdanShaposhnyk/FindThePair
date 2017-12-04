@@ -1,0 +1,36 @@
+.card {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  border: 1px solid white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.front, .back {
+
+  width: inherit;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  & p {
+    color: aquamarine;
+  }
+}
+
+.front {
+  background-color: darkslategray;
+  transform: rotateY(-180deg);
+}
+
+.back {
+  background-color: #777777;
+  z-index: 2;
+  transform: rotateY(0deg);
+}

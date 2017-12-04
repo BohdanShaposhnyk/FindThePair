@@ -1,0 +1,124 @@
+/**
+ * Created by bohdan on 01.12.2017.
+ */
+import Main from 'View/Main'
+import Skins from 'Skins'
+import GameLogic from 'Logic/GameLogic'
+import GAME_STATES from 'Logic/GAME_STATES'
+import IDs from 'View/IDs'
+
+export default class GameController {
+    constructor(parent) {//, model
+        this.cardsSelected = [];
+        this.parent = parent;
+        this.layout = this._GET_DEFAULT_LAYOUT();
+        this.gameLogic = new GameLogic(this.layout.currentSize * 2);
+        this.gameView = new Main(this.getGameViewProps());
+        this.gameView.children.modal.show();
+    }
+
+    start() {
+        this.gameView.render();
+    }
+
+    _GET_GAMEVIEW_RENDER_PROPS () {
+        return {
+            parent: this.parent,
+            id : IDs.main
+        }
+    }
+
+    _GET_GAME_STATE () {
+        return {
+            cardsSelected : this.cardsSelected.slice(),
+            deck : this.gameLogic.deck.slice(),
+            gameState : this.gameLogic.state
+        }
+    }
+
+    getGameViewProps () {
+        const renderProps = this._GET_GAMEVIEW_RENDER_PROPS();
+        return {
+            id : renderProps.id,
+            parent : renderProps.parent,
+            gameState: this._GET_GAME_STATE(),
+            layout: this.layout,
+            handlers : this.getHandlers(),
+        }
+    }
+
+    _resetGame() {
+        this.cardsSelected = [];
+        this.gameLogic = new GameLogic(this.layout.currentSize * 2);
+        this.gameView.update(this.getGameViewProps());
+    }
+
+    _GET_DEFAULT_LAYOUT() {
+        const sizes = [5, 8, 10, 12];
+  //      const defaultSize = sizes[0];
+        const defaultSize = 0;
+
+        return {
+            skins : Skins,
+            currentSkin : Skins.def,
+            sizes : sizes,
+            currentSize : defaultSize,
+        };
+    }
+
+    getHandlers () {
+        return {
+            newGameClick : () => {this.newGameClickHandler();},
+            onCardClick : (i) => {this.cardClickHandler(i);},
+            changeSkin : (newSkin) => {this.changeSkinHandler(newSkin);},
+            changeSize : (newSize) => {this.changeSizeHandler(newSize);},
+            newGameMenuClick : () => {this.newGameMenuClickHandler();}
+        }
+    }
+
+    newGameMenuClickHandler() {
+        this.gameView.children.modal.show();
+    }
+
+    newGameClickHandler() {
+        this.gameView.children.modal.hide();
+        this.layout.currentSize = this.gameView.children.modal.size;
+        this._resetGame();
+    }
+
+    cardClickHandler(index) {
+        if (this.cardsSelected.indexOf(index) !== -1) return;
+        const selected = this.cardsSelected.length;
+        const newBoardState = { gameState : {} };
+        switch (selected) {
+            case 0:
+                this.cardsSelected.push(index);
+                newBoardState.gameState.gameState = GAME_STATES.ONE_SELECTED;
+                newBoardState.gameState.cardsSelected = this.cardsSelected.slice();
+                this.gameView.children.board.updateCard(newBoardState);
+                break;
+            case 1:
+                this.cardsSelected.push(index);
+                newBoardState.gameState.cardsSelected = this.cardsSelected.slice();
+                this.gameLogic.makeMove(...this.cardsSelected);
+                newBoardState.gameState.gameState = this.gameLogic.state;
+
+                this.cardsSelected = [];
+                this.gameView.children.board.updateCard(newBoardState);
+                break;
+        }
+    }
+
+    changeSkinHandler(newSkin) {
+        this.layout.currentSkin = newSkin;
+        console.log(`change skin ${newSkin.board}`);
+        this.gameView.update({layout : this.layout, gameState : this._GET_GAME_STATE()});
+    }
+
+    changeSizeHandler(newSize) {
+        //this.layout.currentSize = newSize;
+        this.gameView.children.modal.size = newSize;
+        console.log(`change size ${newSize}`);
+  //      this._resetGame();
+    }
+}

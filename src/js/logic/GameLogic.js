@@ -7,6 +7,7 @@ export default class GameLogic {
     constructor(deckSize) {
         this.deckSize = deckSize;
         this.deck = this._initDeck();
+        this.state = STATES.NEW_GAME;
     }
 
     _initDeck() {
@@ -29,11 +30,12 @@ export default class GameLogic {
         if (this.deck[i1] !==null && this.deck[i1] == this.deck[i2] && i1 !== i2) {
             this.deck[i2] = this.deck[i1] = null;
             console.log('success');
-            return STATES.WIN;
+            if (this.deck.every( card => { return card === null; } )) {
+                this.state = STATES.GAME_FINISHED;
+            } else this.state = STATES.WIN;
         } else {
             console.log('failure');
-            return STATES.LOSE;
+            this.state = STATES.LOSE;
         }
     }
-
 }

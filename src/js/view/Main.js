@@ -1,60 +1,88 @@
 /**
- * Created by bohdan on 18.11.2017.
+ * Created by bohdan on 01.12.2017.
  */
-import Component from './Component'
+import Component from 'View/Component'
+import layout from 'Styles/main'
+import IDs from 'View/IDs'
 import Board from 'View/Board'
 import Menu from 'View/Menu'
-import GAME_STATES from 'Logic/GAME_STATES'
 import Timer from 'View/Timer'
+import NewGame from 'View/NewGame'
 
+export default class Main extends Component {
+    constructor(props, tag) {
+        super(props, tag);
 
-export default class GameView extends Component{
-    constructor(props) {
-        super(props);
-        this._setState(props);
-        this.board = new Board({
-            layout: this.state.layout,
-            deck: this.state.deck,
-            cardsSelected : this.state.cardsSelected.slice(),
-            onClick : (index) => {this.state.handlers.cardClickHandler(index);}
-        });
-        this.menu = Menu;
-        this.timer = new Timer();
+        this.children = this.initChildren();
+
+        this._applyStylesFromObj(layout);
+        this._applyStylesFromObj({ bg : this.state.layout.currentSkin.bg});
     }
 
-    _getMenuProps(parent) {
+    boardProps() {
         return {
-            parent: parent,
-            stylesList : Object.keys(this.state.layout.skins),
-            currentSize : this.state.layout.currentSize,
-            sizesList: this.state.layout.sizes.slice(),
+            parent : this.me,
+            id : IDs.board,
+            gameState : this.state.gameState,
+            layout : this.state.layout,
+            handlers : { onCardClick : this.state.handlers.onCardClick}
+        }
+    }
+
+    updateChildren() {
+        this.children.menu.update(this.menuProps());
+        this.children.board.update(this.boardProps());
+        this.children.modal.update(this.modalProps());
+        this.children.timer.update({parent : this.children.menu.children.timer.me, id : IDs.timer});
+    }
+
+    menuProps() {
+        return {
+            parent : this.me,
+            id : IDs.menu,
             handlers : {
-                onSizeChange : (newSize) => {this.state.handlers.changeSizeHandler(newSize);},
-                onStyleChange : (newStyle) => {this.state.handlers.changeSkinHandler(newStyle);},
-                highscores : () => {this.state.handlers.highscoresClickHandler();}
+                changeSkin : this.state.handlers.changeSkin,
+                newGameMenuClick : this.state.handlers.newGameMenuClick
             }
-        };
+        }
     }
 
-    _getBoardProps(){
+    modalProps() {
         return {
-            layout: this.state.layout,
-            deck: this.state.deck,
-            cardsSelected : this.state.cardsSelected.slice(),
-            onClick : (index) => {this.state.handlers.cardClickHandler(index);},
-            gameState : GAME_STATES.NO_SELECTION
+            parent : this.me,
+            id : IDs.modal,
+            layout : this.state.layout,
+            handlers : {
+                changeSkin : this.state.handlers.changeSkin,
+                changeSize : this.state.handlers.changeSize,
+                newGameClick : this.state.handlers.newGameClick
+
+            }
+        }
+    }
+
+    timerProps() {
+
+    }
+
+    initChildren() {
+        const children =  {
+            board : new Board(this.boardProps()),
+            menu : new Menu(this.menuProps()),
+            modal : new NewGame(this.modalProps())
         };
+        children.timer = new Timer({parent : children.menu.children.timer.me, id : IDs.timer});
+
+        return children;
+    }
+
+    getBoardProps() {
+
     }
 
     render() {
-        console.log('main');
-        const me = document.createElement('div');
-        me.id = 'app_container';
-        this.menu(this._getMenuProps(me));
-        this.timer.update({parent : me.querySelector('#topNav')});
-        this.timer.start();
-        this.board.state.parent = me;
-        this.board.update(this._getBoardProps());
-        this._insert(me);
+        this.updateChildren();
+        this._insert();
     }
 }
+

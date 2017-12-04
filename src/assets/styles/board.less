@@ -1,49 +1,12 @@
-@board-width: 70vw;
-@board-rate: 4/7;
 .board {
   perspective: 200vw;
-  width: 70vw;
-  height: @board-width * @board-rate;
-  margin: 2vw auto;
+  background-color: transparent;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 3;
   display: grid;
   justify-items: center;
   align-items: center;
   justify-content: space-around;
-}
-
-.card {
-  transition: 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
-  border: 3px solid white;
-
-}
-
-.hide {
-  visibility: hidden;
-}
-
-.front, .back {
-
-  width: inherit;
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  & p {
-    color: aquamarine;
-
-  }
-}
-
-.front {
-  background-color: darkslategray;
-  transform: rotateY(-180deg);
-}
-
-.back {
-  background-color: aquamarine;
-  z-index: 2;
-  transform: rotateY(0deg);
 }

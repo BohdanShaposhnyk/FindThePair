@@ -6,5 +6,7 @@ export default {
     ONE_SELECTED : 1,
     TWO_SELECTED : 2,
     WIN : 3,
-    LOSE : 4
+    LOSE : 4,
+    NEW_GAME : 5,
+    GAME_FINISHED : 6
 }

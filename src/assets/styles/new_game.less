@@ -1,0 +1,118 @@
+.modal_bg {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.modal_container {
+  letter-spacing: 1em;
+  word-spacing: 1.5em;
+  font-family: Courier New, serif;
+  font-size: 2vw;
+  color: #77ffff;
+  background-color: rgba(9,20,20,1);
+  margin: 10% auto;
+  border: 3px solid #77ffff;
+  width: 50vw;
+  height: 30vw;
+  border-radius: 1vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 5fr 1fr 1fr;
+}
+
+.hider {
+  display: none;
+}
+
+.skins, .sizes {
+  letter-spacing: 0.8vw;
+  font-size: 1.5vw;
+  display: flex;
+  padding-top: 10%;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: stretch;
+  justify-items: flex-start;
+  justify-content: flex-start;
+  border-right: 2px solid #77ffff;
+  margin: 2vw 0 2vw 2vw;
+  background-color: transparent;
+}
+
+.skins {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  & div {
+    position: relative;
+    cursor: pointer;
+    line-height: 300%;
+    color: #77ffff;
+    background-color: transparent;
+    &:before {
+      content: '';
+      position: absolute;
+      top:0;
+      left: 25%;
+      width: 50%;
+      height: 1px;
+      background-color: #77ffff;
+    }
+  }
+}
+
+.sizes {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  & div {
+    position: relative;
+    cursor: pointer;
+    line-height: 250%;
+    color: #77ffff;
+    background-color: transparent;
+    &:before {
+      content: '';
+      position: absolute;
+      top:0;
+      left: 25%;
+      width: 50%;
+      height: 1px;
+      background-color: #77ffff;
+    }
+  }
+}
+
+.highscores {
+  cursor: pointer;
+  border: 1px solid #77ffff;
+  margin: 1vw;
+  line-height: 150%;
+  border-radius: 1vw;
+  background-color: transparent;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+
+.new_btn {
+  box-shadow: 0 0 0 1px #333;
+  border: 1px solid #77ffff;
+  cursor: pointer;
+  line-height: 150%;
+  margin: 0 1vw 1vw 1vw;
+  border-radius: 1vw;
+  background-color: transparent;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 3;
+}

@@ -12,8 +12,6 @@ export default class Board extends Component{
         super(props);
         this._setState(props);
         this.cardsDOM = this._createCardsDOM();
-        this.me = document.createElement('div');
-        this.me.id = 'board';
     }
 
     openCard(i) {
@@ -31,51 +29,57 @@ export default class Board extends Component{
     }
 
     leaveTheCardAlone(i) {
-        const spin = Styles.animations.spin;
         const spin_back = Styles.animations.spin_back;
         const card = this.cardsDOM[i];
         card.classList.remove(spin_back);
     }
 
     hideCard(i) {
-        const hide = Styles.board.hide;
+        const hide = Styles.card.hide;
         const card = this.cardsDOM[i];
         card.classList.add(hide);
     }
 
+    onWinningMove() {
+        console.log(`in WIN GAME ${index1} ${index2}`);
+        const [index1, index2] = this.state.gameState.cardsSelected;
+        this.openCard(index2);
+        this.renderCard(index2);
+        this.state.gameState.cardsSelected = [];
+        setTimeout( () => {
+            this.hideCard(index1);
+            this.hideCard(index2);
+        }, 300 );
+    }
+
     updateCard(props) {
         this._setState(props);
-        const gameState = this.state.gameState;
+        console.log(this.state.gameState);
+        const gameState = this.state.gameState.gameState;
         let index1 = null;
         let index2 = null;
         switch (gameState) {
             case GAME_STATES.NO_SELECTION:
                 break;
             case GAME_STATES.ONE_SELECTED:
-                index1 = this.state.cardsSelected[0];
+                index1 = this.state.gameState.cardsSelected[0];
                 const card = this.cardsDOM[index1];
                 card.classList.add(Styles.animations.spin);
                 this.renderCard(index1);
                 break;
-            case GAME_STATES.TWO_SELECTED:
+            case GAME_STATES.GAME_FINISHED:
+                this.onWinningMove();
+                setTimeout( () => {alert('WINNER!');}, 1000 );
                 break;
             case GAME_STATES.WIN:
-                [index1, index2] = this.state.cardsSelected;
-                console.log(`in WIN ${index1} ${index2}`);
-                this.openCard(index2);
-                this.renderCard(index2);
-                this.state.cardsSelected = [];
-                setTimeout( () => {
-                    this.hideCard(index1);
-                    this.hideCard(index2);
-                }, 300 );
+                this.onWinningMove();
                 break;
             case GAME_STATES.LOSE:
-                [index1, index2] = this.state.cardsSelected;
+                [index1, index2] = this.state.gameState.cardsSelected;
                 console.log(`in LOSE ${index1} ${index2}`);
                 this.openCard(index2);
                 this.renderCard(index2);
-                this.state.cardsSelected = [];
+                this.state.gameState.cardsSelected = [];
                 setTimeout( () => {
                     this.closeCard(index1);
                     this.closeCard(index2);
@@ -92,7 +96,7 @@ export default class Board extends Component{
     renderCard(index) {
         const card = this.cardsDOM[index];
         if ( card.value === null ) this.hideCard(index);
-        if ( this.state.cardsSelected.indexOf(index) !== -1 ) {
+        if ( this.state.gameState.cardsSelected.indexOf(index) !== -1 ) {
             this.openCard(index);
         }
         const inDOM = this.me.querySelector(`#${card.id}`);
@@ -102,45 +106,44 @@ export default class Board extends Component{
         } else {
             this.me.appendChild(card);
         }
-     }
+    }
 
-     createCard(i, back, layout) {
+    createCard(i) {
         return Card({
-             id : `c${i}`,
-             value : this.state.deck[i],
-             onClick : () => {this.state.onClick(i)},
-             layout : layout,
-             front : Styles.board.front,
-             back : back
-         })
-     }
+            id : `c${i}`,
+            value : this.state.gameState.deck[i],
+            onClick : () => {this.state.handlers.onCardClick(i)},
+            skin : this.state.layout.currentSkin,
+            size : this.state.layout.currentSize
+
+        })
+    }
 
     _createCardsDOM() {
+        while (this.me.hasChildNodes()) {
+            this.me.removeChild(this.me.lastChild);
+        }
         const cardsDOM = [];
-        const back = [];
-        back.push(this.state.layout.currentSkin['back']);
-        back.push(Styles.board.back);
-        const layout = this._getClassesNeeded('card');
-        for (let i = 0; i < this.state.deck.length; i++) {
-            cardsDOM.push(this.createCard(i,back,layout.slice()));
+        for (let i = 0; i < this.state.gameState.deck.length; i++) {
+            cardsDOM.push(this.createCard(i));
         }
         return cardsDOM;
     }
 
-    _getClassesNeeded(cardOrBoard) {
-        const sizeName = cardOrBoard + this.state.layout.currentSize;
+    _getClassesNeeded() {
+        const sizeName = `board${this.state.layout.currentSize}`;
         return [
-            Styles.board[cardOrBoard],
+            Styles.board.board,
             Styles.sizes[sizeName],
+            this.state.layout.currentSkin.board
         ];
     }
 
     render() {
         this.me.className = '';
-        this.me.classList.add(...this._getClassesNeeded('board'));
-        this.me.classList.add(this.state.layout.currentSkin['board']);
+        this.me.classList.add(...this._getClassesNeeded());
         this.cardsDOM = this._createCardsDOM();
-        for (let i=0; i < this.state.deck.length; i++) {
+        for (let i=0; i < this.state.gameState.deck.length; i++) {
             this.renderCard(i);
         }
         this._insert(this.me);

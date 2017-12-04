@@ -1,105 +1,57 @@
 /**
- * Created by bohdan on 30.11.2017.
+ * Created by bohdan on 01.12.2017.
  */
+
 import Component from 'View/Component'
-import timer from 'Styles/timer.less'
+import layout from 'Styles/timer.less'
+import IDs from 'View/IDs'
 
 export default class Timer extends Component {
-    constructor(props) {
-        super(props);
-        this.me = this.initDOM();
-        this.screen = this.getTimerStructure();
-        this.time = new Date();
+    constructor(props, tag) {
+        super(props, tag);
+        this._applyStylesFromObj({timer : layout.timer});
+        this.children = this.initChildren();
         this.reset();
-        this.timer = null;
-    }
 
-    getTimerStructure() {
-        return {
-            display : this.me.querySelector('#timerDisplay'),
-            m1 : this.me.querySelector('#m1'),
-            m2 : this.me.querySelector('#m2'),
-            s1 : this.me.querySelector('#s1'),
-            s2 : this.me.querySelector('#s2')
-        }
     }
 
     reset() {
-        this.time.setTime(0);
-        this.drawTime();
+        this.children.display.children.m1.me.innerHTML = 0;
+        this.children.display.children.m2.me.innerHTML = 0;
+        this.children.display.children.s1.me.innerHTML = 0;
+        this.children.display.children.s2.me.innerHTML = 0;
     }
 
-    updateTime() {
-        this.time.setTime(this.time.getTime() + 1000);
-        this.drawTime(this.time);
+    initChildren() {
+        const display = new Component({id : IDs.timerInner.display, parent : this.me});
+        const pause = new Component({id : IDs.timerInner.pause, parent : this.me});
+        const replay = new Component({id : IDs.timerInner.replay, parent : this.me});
+        const displayChildren = {
+            m1 : new Component({id : IDs.timerInner.m1, parent : display.me}),
+            m2 : new Component({id : IDs.timerInner.m2, parent : display.me}),
+            colon : new Component({id : IDs.timerInner.colon, parent : display.me}),
+            s1 : new Component({id : IDs.timerInner.s1, parent : display.me}),
+            s2 : new Component({id : IDs.timerInner.s2, parent : display.me})
+        };
+        displayChildren.colon.me.innerHTML = ':';
+        for (let child in displayChildren) {
+            displayChildren[child]._applyStylesFromObj({col : layout.col, name : layout[child]}); //weak part! className has to be equal to ID
+        }
+        display.children = displayChildren;
+        display.renderChildren();
+        const children = {
+            pause : pause,
+            display : display,
+            replay : replay
+        };
+        for (let child in children) {
+            children[child]._applyStylesFromObj({col : layout.timer_part, name : layout[child]}); //weak part! className has to be equal to ID
+        }
+        return children;
     }
-
-    drawTime() {
-        this.screen.s2.innerHTML = this.time.getSeconds()%10;
-        this.screen.s1.innerHTML = Math.floor(this.time.getSeconds()/10);
-        this.screen.m2.innerHTML = this.time.getMinutes()%10;
-        this.screen.m1.innerHTML = Math.floor(this.time.getMinutes()/10);
-    }
-
-    start() {
-        clearInterval(this.timer);
-        this.timer = setInterval( () => {this.updateTime();}, 1000 );
-    }
-
-    initDOM() {
-        // const markup = `
-        //             <div id="timerContainer" class="${timer.timerContainer}">
-        //                 <div id="timerScreen">
-        //                     <div id="timerDisplay" class='${timer.display}'>
-        //                         <div id='m1' class='${timer.col} ${timer.m1}'>
-        //                         </div>
-        //                         <div id='m2' class='${timer.col} ${timer.m2}'>
-        //                          </div>
-        //                          <div class='col colon'>
-        //                          </div>
-        //                          <div id='s1' class='${timer.col} ${timer.s1}'>
-        //                          </div>
-        //                          <div id='s2' class='${timer.col} ${timer.s2}'>
-        //                          </div>
-        //                     </div>
-        //                 </div>
-        //                 <div id="timerButtonPanel">
-        //                     <div id="play_pause">
-        //                     </div>
-        //                     <div id="restart">
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         `;
-        const markup = `
-                            <div id="timerDisplay" class='${timer.display}'>
-                                <div id='m1' class='${timer.col} ${timer.m1}'>
-                                </div>
-                                <div id='m2' class='${timer.col} ${timer.m2}'>
-                                 </div>
-                                 <div class='${timer.col} ${timer.colon}'>:
-                                 </div>
-                                 <div id='s1' class='${timer.col} ${timer.s1}'>
-                                 </div>
-                                 <div id='s2' class='${timer.col} ${timer.s2}'>
-                                 </div>
-                            </div>
-                `;
-        const template = document.createElement('template'); //is not supported by IE
-        template.innerHTML = markup;
-    //    const me = document.importNode(template.content, true);
-//        console.log(me.firstElementChild.id);
-        const me = template.content.firstElementChild;
-        return me;
-    };
 
     render() {
-      //  console.log('timer ' + this.me.id);
-      //   console.log();
-      //   if (this.me.id != 'undefined') {
-      //       this._insert(this.me);
-      //   }
-        this._insert(this.me);
+        this.renderChildren();
+        this._insert();
     }
 }
-
