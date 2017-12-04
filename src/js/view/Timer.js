@@ -5,6 +5,7 @@
 import Component from 'View/Component'
 import layout from 'Styles/timer.less'
 import IDs from 'View/IDs'
+import TS from 'Logic/TimerStates'
 
 export default class Timer extends Component {
     constructor(props, tag) {
@@ -15,8 +16,10 @@ export default class Timer extends Component {
         this.time = new Date();
         this.reset();
         this.timer = null;
-
+        this.timerStatus = TS.PAUSED;
     }
+
+
 
     getTimerStructure() {
         return {
@@ -43,16 +46,19 @@ export default class Timer extends Component {
     start() {
         clearInterval(this.timer);
         this.timer = setInterval( () => {this.updateTime();}, 1000 );
+        this.timerStatus = TS.GOING;
     }
 
     stop() {
         clearInterval(this.timer);
+        this.timerStatus = TS.PAUSED;
     }
 
 
     reset() {
         this.time.setTime(0);
         this.drawTime();
+        this.timerStatus = TS.PAUSED;
     }
 
     initChildren() {
@@ -77,6 +83,10 @@ export default class Timer extends Component {
             display : display,
             replay : replay
         };
+        children.replay.me.innerHTML = '&#8635;';
+        children.replay.me.onclick = () => {this.state.handlers.restartGame();};
+        children.pause.me.innerHTML = '&#10074;&#10074;';
+        children.pause.me.onclick = () => {this.state.handlers.pauseGame();};
         for (let child in children) {
             children[child]._applyStylesFromObj({col : layout.timer_part, name : layout[child]}); //weak part! className has to be equal to ID
         }
@@ -84,6 +94,7 @@ export default class Timer extends Component {
     }
 
     render() {
+        this.children.pause.me.innerHTML = '&#10074;&#10074;';
         this.renderChildren();
         this._insert();
     }

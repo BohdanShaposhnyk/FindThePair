@@ -1,19 +1,21 @@
 
 @keyframes cardSpin {
-  from {transform: rotateY(0deg);}
-  to {transform: rotateY(-180deg);}
+  from {transform: rotateY(0deg) translate(0, 0) scale(1, 1);}
+  to {transform: rotateY(-180deg) translate(0.3vw, -0.6vw) scale(1.2, 1.2);}
 }
 
 .spin {
   animation-name: cardSpin;
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
   animation-fill-mode: forwards;
+  box-shadow: 8px 18px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 
 .spin_back {
+  box-shadow: -7px 14px 20px 0 rgba(0, 0, 0, 0.19) !important;
   animation-name: cardSpin;
   animation-timing-function: ease-in;
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
   animation-fill-mode: both;
   animation-direction: reverse;
 }

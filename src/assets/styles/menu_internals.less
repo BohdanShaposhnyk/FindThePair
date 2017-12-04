@@ -1,4 +1,5 @@
 @lineHeight: 150%;
+@main_color: #77ffff;
 
 .logo_container, .new_game_container, .skin_change_container, .highscores_container {
   line-height: @lineHeight;
@@ -6,7 +7,7 @@
   box-shadow: 0 0 0 1px #333;
   border: 1px solid black;
   &:hover {
-    text-shadow: 0 0 8px cyan, 0 0 14px cyan;
+    text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
     background-color: darken(#333, 2%) !important;
   }
 }
@@ -36,7 +37,7 @@
   z-index: 1;
   & div {
     &:hover {
-      text-shadow: 0 0 8px cyan, 0 0 14px cyan;
+      text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
       background-color: darken(rgba(31,31,31,0.4), 2%) !important;
     }
   }

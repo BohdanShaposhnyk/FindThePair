@@ -41,7 +41,6 @@ export default class Board extends Component{
     }
 
     onWinningMove() {
-        console.log(`in WIN GAME ${index1} ${index2}`);
         const [index1, index2] = this.state.gameState.cardsSelected;
         this.openCard(index2);
         this.renderCard(index2);
@@ -49,7 +48,7 @@ export default class Board extends Component{
         setTimeout( () => {
             this.hideCard(index1);
             this.hideCard(index2);
-        }, 300 );
+        }, 100 );
     }
 
     updateCard(props) {
@@ -89,7 +88,19 @@ export default class Board extends Component{
                 setTimeout( () => {
                     this.leaveTheCardAlone(index1);
                     this.leaveTheCardAlone(index2);
-                }, 1000 );
+                }, 650 );
+        }
+    }
+
+    setClickable() {
+        if (this.me.classList.contains(Styles.board.noclick)) {
+            this.me.classList.remove(Styles.board.noclick);
+        }
+    }
+
+    setUnclickable() {
+        if (!this.me.classList.contains(Styles.board.noclick)) {
+            this.me.classList.add(Styles.board.noclick);
         }
     }
 

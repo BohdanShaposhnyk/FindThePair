@@ -58,7 +58,6 @@ export default class Main extends Component {
                 changeSkin : this.state.handlers.changeSkin,
                 changeSize : this.state.handlers.changeSize,
                 newGameClick : this.state.handlers.newGameClick
-
             }
         }
     }
@@ -69,7 +68,14 @@ export default class Main extends Component {
             menu : new Menu(this.menuProps()),
             modal : new NewGame(this.modalProps())
         };
-        children.timer = new Timer({parent : children.menu.children.timer.me, id : IDs.timer});
+        children.timer = new Timer({
+            parent : children.menu.children.timer.me,
+            id : IDs.timer,
+            handlers : {
+                restartGame : this.state.handlers.restartGame,
+                pauseGame : this.state.handlers.pauseGame
+            }
+        });
 
         return children;
     }

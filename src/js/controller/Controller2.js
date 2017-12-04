@@ -6,6 +6,8 @@ import Skins from 'Skins'
 import GameLogic from 'Logic/GameLogic'
 import GAME_STATES from 'Logic/GAME_STATES'
 import IDs from 'View/IDs'
+import TS from 'Logic/TimerStates'
+
 
 export default class GameController {
     constructor(parent) {//, model
@@ -53,6 +55,7 @@ export default class GameController {
         this.gameView.update(this.getGameViewProps());
         this.gameView.children.timer.reset();
         this.gameView.children.timer.start();
+        this.gameView.children.board.setClickable();
     }
 
     _GET_DEFAULT_LAYOUT() {
@@ -74,8 +77,45 @@ export default class GameController {
             onCardClick : (i) => {this.cardClickHandler(i);},
             changeSkin : (newSkin) => {this.changeSkinHandler(newSkin);},
             changeSize : (newSize) => {this.changeSizeHandler(newSize);},
-            newGameMenuClick : () => {this.newGameMenuClickHandler();}
+            newGameMenuClick : () => {this.newGameMenuClickHandler();},
+            restartGame : () => {this.gameRestartHandler();},
+            pauseGame : () => {this.gamePauseHandler();}
         }
+    }
+
+    _pauseGame() {
+        const timer = this.gameView.children.timer;
+        const board = this.gameView.children.board;
+        timer.stop();
+        board.setUnclickable();
+    }
+
+    _resumeGame() {
+        const timer = this.gameView.children.timer;
+        const board = this.gameView.children.board;
+        timer.start();
+        board.setClickable();
+    }
+
+    gamePauseHandler() {
+
+        const button = this.gameView.children.timer.children.pause.me;
+        const status = this.gameView.children.timer.timerStatus;
+        console.log(status);
+        switch (status) {
+            case TS.GOING:
+                button.innerHTML = '&#9656';
+                this._pauseGame();
+                break;
+            case TS.PAUSED:
+                button.innerHTML = '&#10074;&#10074;';
+                this._resumeGame();
+                break;
+        }
+    }
+
+    gameRestartHandler() {
+        this._resetGame();
     }
 
     newGameMenuClickHandler() {
