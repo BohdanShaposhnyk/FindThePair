@@ -92,14 +92,18 @@ export default class Board extends Component{
         }
     }
 
+    _isClickable() {
+        return !this.me.classList.contains(Styles.board.noclick);
+    }
+
     setClickable() {
-        if (this.me.classList.contains(Styles.board.noclick)) {
+        if (!this._isClickable()) {
             this.me.classList.remove(Styles.board.noclick);
         }
     }
 
     setUnclickable() {
-        if (!this.me.classList.contains(Styles.board.noclick)) {
+        if (this._isClickable()) {
             this.me.classList.add(Styles.board.noclick);
         }
     }

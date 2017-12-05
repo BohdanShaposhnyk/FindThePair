@@ -161,8 +161,11 @@ export default class GameController {
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = newSkin;
         const timerStatus = this.gameView.children.timer.children.pause.me.innerHTML;
+        const clickable = this.gameView.children.board._isClickable();
         this.gameView.update({layout : this.layout, gameState : this._GET_GAME_STATE()});
         this.gameView.children.timer.children.pause.me.innerHTML = timerStatus;
+        (clickable) ?
+            this.gameView.children.board.setClickable() : this.gameView.children.board.setUnclickable();
     }
 
     changeSizeHandler(newSize) {

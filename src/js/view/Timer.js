@@ -95,8 +95,6 @@ export default class Timer extends Component {
     }
 
     render() {
-       // (this.timerStatus === 0) ?
-       //     this.children.pause.me.innerHTML = '&#10074;&#10074;' : this.children.pause.me.innerHTML = '&#9656';
         this.children.pause.me.innerHTML = '&#10074;&#10074;';
         this.renderChildren();
         this._insert();
