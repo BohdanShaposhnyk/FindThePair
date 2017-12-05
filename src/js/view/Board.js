@@ -13,7 +13,7 @@ export default class Board extends Component{
         super(props);
         this._setState(props);
         this.cardsDOM = this._createCardsDOM();
-        this.cardFaces = [];
+        this.cardFaces = icons();
     }
 
     openCard(i) {
@@ -122,7 +122,8 @@ export default class Board extends Component{
     createCard(i) {
         return Card({
             id : `c${i}`,
-            value : this.cardFaces[this.state.gameState.deck[i]],
+            icon : this.cardFaces[this.state.gameState.deck[i]],
+            value : this.state.gameState.deck[i],
             onClick : () => {this.state.handlers.onCardClick(i)},
             skin : this.state.layout.currentSkin,
             size : this.state.layout.currentSize
@@ -151,7 +152,7 @@ export default class Board extends Component{
     }
 
     render() {
-        this.cardFaces = icons();
+
         this.me.className = '';
         this.me.classList.add(...this._getClassesNeeded());
         this.cardsDOM = this._createCardsDOM();

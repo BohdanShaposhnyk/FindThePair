@@ -160,7 +160,9 @@ export default class GameController {
 
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = newSkin;
+        const timerStatus = this.gameView.children.timer.children.pause.me.innerHTML;
         this.gameView.update({layout : this.layout, gameState : this._GET_GAME_STATE()});
+        this.gameView.children.timer.children.pause.me.innerHTML = timerStatus;
     }
 
     changeSizeHandler(newSize) {

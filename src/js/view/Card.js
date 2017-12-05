@@ -15,11 +15,12 @@ export default function card(props) {
     front.className = layout.front;
     back.classList.add(props.skin.back, layout.back);
 
-    front.innerHTML = `<p>${props.value}</p>`;
+    front.innerHTML = `<p>${props.icon}</p>`;
     Card.appendChild(front);
     Card.appendChild(back);
     Card.onclick = () => {props.onClick();};
     Card.id = props.id;
+    Card.value = props.value;
     Card.classList.add(layout.card, sizes[sizeName]);
     return Card;
 }
