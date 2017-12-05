@@ -6,12 +6,14 @@ import Component from './Component'
 import Card from 'View/Card'
 import Styles from 'Styles'
 import GAME_STATES from 'Logic/GAME_STATES'
+import icons from 'Logic/IconGenerator'
 
 export default class Board extends Component{
     constructor(props) {
         super(props);
         this._setState(props);
         this.cardsDOM = this._createCardsDOM();
+        this.cardFaces = [];
     }
 
     openCard(i) {
@@ -53,7 +55,6 @@ export default class Board extends Component{
 
     updateCard(props) {
         this._setState(props);
-        console.log(this.state.gameState);
         const gameState = this.state.gameState.gameState;
         let index1 = null;
         let index2 = null;
@@ -75,7 +76,6 @@ export default class Board extends Component{
                 break;
             case GAME_STATES.LOSE:
                 [index1, index2] = this.state.gameState.cardsSelected;
-                console.log(`in LOSE ${index1} ${index2}`);
                 this.openCard(index2);
                 this.renderCard(index2);
                 this.state.gameState.cardsSelected = [];
@@ -122,7 +122,7 @@ export default class Board extends Component{
     createCard(i) {
         return Card({
             id : `c${i}`,
-            value : this.state.gameState.deck[i],
+            value : this.cardFaces[this.state.gameState.deck[i]],
             onClick : () => {this.state.handlers.onCardClick(i)},
             skin : this.state.layout.currentSkin,
             size : this.state.layout.currentSize
@@ -151,6 +151,7 @@ export default class Board extends Component{
     }
 
     render() {
+        this.cardFaces = icons();
         this.me.className = '';
         this.me.classList.add(...this._getClassesNeeded());
         this.cardsDOM = this._createCardsDOM();

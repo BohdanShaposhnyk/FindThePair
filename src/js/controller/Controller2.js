@@ -101,7 +101,6 @@ export default class GameController {
 
         const button = this.gameView.children.timer.children.pause.me;
         const status = this.gameView.children.timer.timerStatus;
-        console.log(status);
         switch (status) {
             case TS.GOING:
                 button.innerHTML = '&#9656';
@@ -161,14 +160,10 @@ export default class GameController {
 
     changeSkinHandler(newSkin) {
         this.layout.currentSkin = newSkin;
-        console.log(`change skin ${newSkin.board}`);
         this.gameView.update({layout : this.layout, gameState : this._GET_GAME_STATE()});
     }
 
     changeSizeHandler(newSize) {
-        //this.layout.currentSize = newSize;
         this.gameView.children.modal.size = newSize;
-        console.log(`change size ${newSize}`);
-  //      this._resetGame();
     }
 }
