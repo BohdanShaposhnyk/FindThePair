@@ -65,7 +65,7 @@ export default class GameController {
 
         return {
             skins : Skins,
-            currentSkin : Skins.def,
+            currentSkin : Skins.classic,
             sizes : sizes,
             currentSize : defaultSize,
         };
@@ -148,10 +148,13 @@ export default class GameController {
                 this.cardsSelected = [];
                 this.gameView.children.board.updateCard(newBoardState);
                 if (this.gameLogic.state == GAME_STATES.GAME_FINISHED) {
+
                     this.gameView.children.timer.stop();
+                    const scores = this.gameLogic.calculateScore(this.gameView.children.timer.time.getTime());
                     setTimeout( () => {
                         alert(`WINNER! ${this.gameView.children.timer.time.getMinutes()} minutes,
-                               ${this.gameView.children.timer.time.getSeconds()} seconds!`);
+                               ${this.gameView.children.timer.time.getSeconds()} seconds! 
+                               Your score: ${scores}`);
                     }, 1000 );
                 }
                 break;
@@ -170,5 +173,6 @@ export default class GameController {
 
     changeSizeHandler(newSize) {
         this.gameView.children.modal.size = newSize;
+        this.gameView.children.modal.render();
     }
 }

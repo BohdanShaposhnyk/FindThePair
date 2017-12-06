@@ -8,6 +8,20 @@ export default class GameLogic {
         this.deckSize = deckSize;
         this.deck = this._initDeck();
         this.state = STATES.NEW_GAME;
+        this.mistakes = 0;
+    }
+
+    getProbability() {
+        const size = this.deckSize;
+        return size/this.getCombinations(size);    // probability
+    }
+
+    getCombinations(number) {
+        let combinations = 0;
+        for (let i = 1; i < number; i++) {
+            combinations += i;
+        }
+        return combinations;
     }
 
     _initDeck() {
@@ -26,6 +40,12 @@ export default class GameLogic {
         return deck;
     }
 
+    calculateScore(time) {
+        const prob = this.getProbability();
+        time/=1000;
+        return Math.round(10000/(prob * prob * (time + this.mistakes * this.getCombinations(24))));
+    }
+
     makeMove(i1, i2) {
         if (this.deck[i1] !==null && this.deck[i1] == this.deck[i2] && i1 !== i2) {
             this.deck[i2] = this.deck[i1] = null;
@@ -36,6 +56,7 @@ export default class GameLogic {
         } else {
             console.log('failure');
             this.state = STATES.LOSE;
+            this.mistakes++;
         }
     }
 }

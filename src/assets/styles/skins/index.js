@@ -6,7 +6,7 @@ import style2 from './style2.less'
 import def from './def.less'
 
 export default {
-    def : def,
+    classic : def,
     style1 : style1,
     style2 : style2
 }

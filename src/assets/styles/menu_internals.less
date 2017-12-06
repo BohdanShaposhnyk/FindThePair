@@ -32,13 +32,13 @@
   background-color: rgba(31,31,31,0.2);
   text-shadow: 0 0 0;
   width: inherit;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
   padding: 1vw 1.5vw;
   z-index: 1;
   & div {
     &:hover {
       text-shadow: 0 0 8px @main_color, 0 0 14px @main_color;
-      background-color: darken(rgba(31,31,31,0.4), 2%) !important;
+      background: radial-gradient(fadeout(@main_color, 30%) 5%, fadeout(@main_color, 90%) 25%, transparent 40% ) !important;
     }
   }
 }
