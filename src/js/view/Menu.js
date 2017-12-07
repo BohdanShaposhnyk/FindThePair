@@ -39,6 +39,7 @@ export default class Menu extends Component {
             skinChange : new Component({id : IDs.menuElems.skinChange, parent : this.me}),
             highscores : new Component({id : IDs.menuElems.highscores, parent : this.me}),
         };
+        children.highscores.me.onclick = this.state.handlers.showHighscores;
         children.newGame.me.innerHTML = 'NEW GAME';
         children.newGame.me.onclick = this.state.handlers.newGameMenuClick;
         children.highscores.me.innerHTML = 'HIGH SCORES';

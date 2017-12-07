@@ -43,7 +43,7 @@ export default class GameLogic {
     calculateScore(time) {
         const prob = this.getProbability();
         time/=1000;
-        return Math.round(10000/(prob * prob * (time + this.mistakes * this.getCombinations(24))));
+        return Math.round(10000000/(prob * prob * ((time + 3 * this.mistakes) * this.getCombinations(24))));
     }
 
     makeMove(i1, i2) {

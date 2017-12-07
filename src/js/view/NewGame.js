@@ -13,11 +13,6 @@ export default class NewGame extends Component {
         this._applyStylesFromObj({layout : layout.modal_bg});
         this.children = this.initChildren();
         this.size = 5;
-        window.onclick = (e) => {
-            if (e.target == this.me) {
-                this.hide();
-            }
-        };
     }
 
     addBtnList(parent) {
@@ -124,6 +119,7 @@ export default class NewGame extends Component {
 
     render() {
         this.renderChildren();
+
         this._setHighlight();
         this._insert();
     }

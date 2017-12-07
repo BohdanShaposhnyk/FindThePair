@@ -32,6 +32,14 @@ export default {
         newGameBtn : 'modal_new_btn',
         sizes : 'modal_sizes',
         skins : 'modal_skins'
+    },
+    gameFinishedModal : 'game_finished_modal',
+    gameFinishedModalInternals : {
+        container : 'game_finished_container'
+    },
+    highscores : 'highscores_modal',
+    highscoresInternals : {
+        container : 'highscores_modal_container'
     }
 
 

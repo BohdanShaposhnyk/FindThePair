@@ -8,6 +8,8 @@ import Board from 'View/Board'
 import Menu from 'View/Menu'
 import Timer from 'View/Timer'
 import NewGame from 'View/NewGame'
+import GameFinishedModal from 'View/GameFinished'
+import Highscores from 'View/Highscores'
 
 export default class Main extends Component {
     constructor(props, tag) {
@@ -16,6 +18,17 @@ export default class Main extends Component {
         this.children = this.initChildren();
 
         this._applyStylesFromObj(layout);
+        window.onclick = (e) => {
+            if (e.target == this.children.modal.me) {
+                this.children.modal.hide();
+            }
+            if (e.target == this.children.finished.me ) {
+                this.children.finished.hide();
+            }
+            if (e.target == this.children.highscores.me ) {
+                this.children.highscores.hide();
+            }
+        };
 
     }
 
@@ -34,6 +47,7 @@ export default class Main extends Component {
         this.children.board.update(this.boardProps());
         this.children.modal.update(this.modalProps());
         this.children.timer.update({parent : this.children.menu.children.timer.me, id : IDs.timer});
+        this.children.highscores.update({scores : []});
     }
 
     menuProps() {
@@ -42,7 +56,8 @@ export default class Main extends Component {
             id : IDs.menu,
             handlers : {
                 changeSkin : this.state.handlers.changeSkin,
-                newGameMenuClick : this.state.handlers.newGameMenuClick
+                newGameMenuClick : this.state.handlers.newGameMenuClick,
+                showHighscores : this.state.handlers.showHighscores
             },
             skinsList : this.state.layout.skins,
             currentSkin : this.state.layout.currentSkin
@@ -66,7 +81,15 @@ export default class Main extends Component {
         const children =  {
             board : new Board(this.boardProps()),
             menu : new Menu(this.menuProps()),
-            modal : new NewGame(this.modalProps())
+            modal : new NewGame(this.modalProps()),
+            finished : new GameFinishedModal({
+                id : IDs.gameFinishedModal,
+                parent : this.me,
+            }),
+            highscores : new Highscores({
+                id : IDs.highscores,
+                parent : this.me,
+            })
         };
         children.timer = new Timer({
             parent : children.menu.children.timer.me,
@@ -93,6 +116,8 @@ export default class Main extends Component {
         this.clearBgSkin();
         this._applyStylesFromObj({ bg : this.state.layout.currentSkin.bg});
         this.updateChildren();
+        this.children.highscores.hide();
+
         this._insert();
     }
 }

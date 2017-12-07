@@ -28,7 +28,8 @@ let config = {
             Controller : path.resolve(__dirname, 'src/js/controller'),
             Utils : path.resolve(__dirname, 'src/js/utils'),
             Skins : path.resolve(__dirname, 'src/assets/styles/skins'),
-            Logic : path.resolve(__dirname, 'src/js/logic')
+            Logic : path.resolve(__dirname, 'src/js/logic'),
+            Model : path.resolve(__dirname, 'src/js/model')
         }
     },
 
