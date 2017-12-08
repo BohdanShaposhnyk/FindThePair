@@ -41,13 +41,14 @@ export default class GameFinished extends Component {
         containerChildren.textInput.me.value = 'anon';
         containerChildren.textInput.me.size = 13;
         containerChildren.textInput.me.maxLength = 12;
+        containerChildren.textInput.me.onfocus = () => {containerChildren.textInput.me.value ='';};
         containerChildren.restart._applyStylesFromObj({restart : layout.restart});
         containerChildren.newGame._applyStylesFromObj({newGame : layout.new_game});
         containerChildren.restart.me.onclick = () => {
             this.hide();
             this.state.handlers.restartGame();
         };
-        containerChildren.newGame.onclick = () => {
+        containerChildren.newGame.me.onclick = () => {
             this.hide();
             this.state.handlers.newGame();
         };
@@ -61,7 +62,7 @@ export default class GameFinished extends Component {
     }
 
     drawOutput() {
-        this.children.container.children.message.me.innerHTML = `Your score: 
+        this.children.container.children.message.me.innerHTML = `Your score:  
 ${this.state.score}`;
     }
 

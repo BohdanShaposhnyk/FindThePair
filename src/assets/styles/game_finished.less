@@ -14,16 +14,11 @@
 }
 
 .container {
-//  white-space: nowrap;
   padding: 2vw;
- // letter-spacing: 1em;
-//  word-spacing: 1em;
-  font-family: Courier New, serif;
   font-size: 2vw;
-  color: @main_color;
+  color: fadein(@main_color,30%);
   background-color: darken(@main_color, 20%);
   margin: 10% auto;
- // border: 3px solid @main_color;
   box-shadow: 0 0 16px 0 @main_color, inset 0 0 16px 0 @main_color;
   width: 35vw;
   height: 25vw;
@@ -39,7 +34,6 @@
   border: 1px solid @main_color;
   cursor: pointer;
   line-height: 200%;
- // margin: 0 1vw 1vw 1vw;
   border-radius: 1vw;
   background-color: transparent;
   &:hover {
@@ -74,7 +68,6 @@
 
 .text_field {
   text-align: center;
- // color: darken(@main_color, 5%);
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2;
@@ -86,16 +79,16 @@
   border-style : none;
   background-color: darken(@main_color, 60%);
   border-radius : 1vw;
-  text-shadow: 0 0 0 @main_color;
+  text-shadow: 0 0 0 fadein(@main_color,30%);
   box-shadow: 0 0 16px 0 @main_color, inset 0 0 16px 0 @main_color;
   &:focus {
     outline: none;
+    background-color: darken(@main_color, 60%);
+    box-shadow: 0 0 10vw 0 @main_color, inset 0 0 16px 0 @main_color;
   }
 }
 
 .message {
-//  box-shadow: 0 0 16px 0 @main_color, inset 0 0 16px 0 @main_color;
- // white-space: nowrap;
   font-size: 3vw;
   border-radius: 1vw;
   font-weight: bold;

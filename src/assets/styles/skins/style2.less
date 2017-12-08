@@ -1,16 +1,18 @@
-@card-color: gray;
+@main-color: gray;
+@secondary: #ff4edf;
+
+.bg {
+  background-color: darken(#b9b9b9, 2%);
+}
+
 .board {
   background-color: #b9b9b9;
-  color: lavender;
+  color: @secondary;
 }
 
 .back {
-  background-color: @card-color !important;
+  background-color: @main-color !important;
   &:hover {
-    background-color: darken(@card-color, 2%) !important;
+    background-color: darken(@main-color, 2%) !important;
   }
-}
-
-.bg {
-  background-color: darken(#b9b9b9, 5%);
 }
