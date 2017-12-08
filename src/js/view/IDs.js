@@ -35,7 +35,11 @@ export default {
     },
     gameFinishedModal : 'game_finished_modal',
     gameFinishedModalInternals : {
-        container : 'game_finished_container'
+        container : 'game_finished_container',
+        message : 'finished_message',
+        textInput : 'name_text_input',
+        restart : 'game_finished_restart',
+        newGame : 'game_finished_new_game'
     },
     highscores : 'highscores_modal',
     highscoresInternals : {

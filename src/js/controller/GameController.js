@@ -10,17 +10,17 @@ import TS from 'Logic/TimerStates'
 import Storage from 'Model/HighscoresStorage'
 
 
+
 export default class GameController {
-    constructor(parent) {//, model
+    constructor(parent) {
         this.cardsSelected = [];
         this.parent = parent;
+        this.storage = new Storage();
         this.layout = this._GET_DEFAULT_LAYOUT();
         this.gameLogic = new GameLogic(this.layout.currentSize * 2);
         this.gameView = new Main(this.getGameViewProps());
         this.gameView.children.modal.show();
-        this.gameView.children.finished.hide();
         this.gameView.children.highscores.hide();
-        this.storage = new Storage();
     }
 
     start() {
@@ -56,6 +56,7 @@ export default class GameController {
     _resetGame() {
         this.cardsSelected = [];
         this.gameLogic = new GameLogic(this.layout.currentSize * 2);
+        this.gameView.children.board.resetIcons();
         this.gameView.update(this.getGameViewProps());
         this.gameView.children.timer.reset();
         this.gameView.children.timer.start();
@@ -64,7 +65,6 @@ export default class GameController {
 
     _GET_DEFAULT_LAYOUT() {
         const sizes = [5, 8, 10, 12];
-  //      const defaultSize = sizes[0];
         const defaultSize = 0;
 
         return {
@@ -84,7 +84,8 @@ export default class GameController {
             newGameMenuClick : () => {this.newGameMenuClickHandler();},
             restartGame : () => {this.gameRestartHandler();},
             pauseGame : () => {this.gamePauseHandler();},
-            showHighscores : () => {this.highScoresClickHandler();}
+            showHighscores : () => {this.highScoresClickHandler();},
+            addHighscore : () => {this.addHighscore();}
         }
     }
 
@@ -93,6 +94,7 @@ export default class GameController {
         const board = this.gameView.children.board;
         timer.stop();
         board.setUnclickable();
+        console.log(`in pause game ${this.gameLogic.state}`);
     }
 
     _resumeGame() {
@@ -103,7 +105,8 @@ export default class GameController {
     }
 
     gamePauseHandler() {
-
+        if (this.layout.currentSize === 0 ||
+            this.gameLogic.state === GAME_STATES.GAME_FINISHED) return;
         const button = this.gameView.children.timer.children.pause.me;
         const status = this.gameView.children.timer.timerStatus;
         switch (status) {
@@ -119,22 +122,20 @@ export default class GameController {
     }
 
     highScoresClickHandler() {
-
-        this.gameView.children.highscores.update({scores : this.storage.getAll()});
-        console.log('show hoghscores ' + this.storage.getAll());
+        this.gameView.children.highscores.update({
+            scores : this.storage.getAll(),
+            size: this.gameView.state.layout.currentSize
+        });
         this.gameView.children.highscores.show();
     }
 
     gameRestartHandler() {
+        if (this.layout.currentSize === 0) return;
         this._resetGame();
     }
 
 
     newGameMenuClickHandler() {
-        console.log('in controller ' + this.storage.getAll().slice());
-        // this.gameView.children.highscores.update({
-        //     scores : this.storage.getAll().slice()
-        // });
         this.gameView.children.modal.show();
     }
 
@@ -165,17 +166,22 @@ export default class GameController {
                 this.cardsSelected = [];
                 this.gameView.children.board.updateCard(newBoardState);
                 if (this.gameLogic.state == GAME_STATES.GAME_FINISHED) {
-
                     this.gameView.children.timer.stop();
                     const scores = this.gameLogic.calculateScore(this.gameView.children.timer.time.getTime());
-                    this.storage.addOne({player : 'testPlayer', score : scores});
                     setTimeout( () => {
-                        this.gameView.children.finished.update({score : scores});
+                        this.gameView.children.finished.update({score : scores, size : this.gameView.state.layout.currentSize});
                         this.gameView.children.finished.show();
                     }, 1000 );
                 }
                 break;
         }
+    }
+
+    addHighscore() {
+        const scores = this.gameView.children.finished.state.score;
+        const size = this.gameView.state.layout.currentSize;
+        const player = this.gameView.children.finished.children.container.children.textInput.me.value;
+        this.storage.addOne({player : player, score : scores, size : size});
     }
 
     changeSkinHandler(newSkin) {

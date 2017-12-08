@@ -20,10 +20,40 @@ export default class GameFinished extends Component {
         container._applyStylesFromObj({container : layout.container});
         const containerChildren = {
             message : new Component({
-                id : IDs.modalInternals.sizes,
+                id : IDs.gameFinishedModalInternals.message,
                 parent : container.me
             }),
+            textInput : new Component({
+                id : IDs.gameFinishedModalInternals.textInput,
+                parent : container.me
+            }, 'INPUT'),
+            restart : new Component({
+                id : IDs.gameFinishedModalInternals.restart,
+                parent : container.me
+            }),
+            newGame : new Component({
+                id : IDs.gameFinishedModalInternals.newGame,
+                parent : container.me
+            })
         };
+        containerChildren.textInput.me.setAttribute("type", "text");
+      //  containerChildren.textInput.me.placeholder = 'Enter your name...';
+        containerChildren.textInput.me.value = 'anon';
+        containerChildren.textInput.me.size = 13;
+        containerChildren.textInput.me.maxLength = 12;
+        containerChildren.restart._applyStylesFromObj({restart : layout.restart});
+        containerChildren.newGame._applyStylesFromObj({newGame : layout.new_game});
+        containerChildren.restart.me.onclick = () => {
+            this.hide();
+            this.state.handlers.restartGame();
+        };
+        containerChildren.newGame.onclick = () => {
+            this.hide();
+            this.state.handlers.newGame();
+        };
+        containerChildren.restart.me.innerHTML = '&#8635;';
+        containerChildren.newGame.me.innerHTML = 'NEW GAME';
+        containerChildren.textInput._applyStylesFromObj({input : layout.text_field});
         containerChildren.message._applyStylesFromObj({message : layout.message});
         container.children = containerChildren;
         container.renderChildren();
@@ -49,6 +79,7 @@ ${this.state.score}`;
         if (!this.me.classList.contains(hider)) {
             this.me.classList.add(hider);
         }
+        this.state.handlers.addHighscore();
     }
 
     render() {

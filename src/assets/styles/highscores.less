@@ -1,6 +1,25 @@
 @main_color: #77ffff;
 @second_color: rgb(83, 114, 110);
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: darken(@main_color,50%);
+  border-radius: 10px;
+  box-shadow: 0 0 5vw 0 @main_color, inset 0 0 2vw 0 @main_color;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: @main_color;
+  border-radius: 10px;
+  box-shadow: 0 0 1vw 0 @main_color;
+}
+
+
 .modal_bg {
   position: fixed;
   overflow: auto;
@@ -15,23 +34,49 @@
   display: none;
 }
 
+.entry {
+  margin-bottom: 3vw;
+  display: inline-flex;
+  text-align: center;
+  & div {
+    &:nth-child(1) {
+      min-width: 10%;
+    }
+    &:nth-child(2) {
+      min-width: 40%;
+    }
+    &:nth-child(4) {
+      min-width: 20%;
+    }
+    &:nth-child(3) {
+      min-width: 30%;
+    }
+  }
+  &:first-child {
+    line-height: 200%;
+    color: @second_color;
+    font-size: 2vw;
+    font-weight: bold;
+    margin-bottom: 4vw;
+  }
+}
+
 .container {
-  //  white-space: nowrap;
+  white-space: nowrap;
+  line-height: 150%;
+  overflow: auto;
   padding: 2vw;
-  letter-spacing: 1em;
-  word-spacing: 1em;
+  letter-spacing: 0.1em;
+  word-spacing: 0.1em;
   font-family: Courier New, serif;
   font-size: 2vw;
   color: @main_color;
   background-color: darken(@main_color, 80%);
-  margin: 10% auto;
-  // border: 3px solid @main_color;
+  margin: 8% auto;
   box-shadow: 0 0 16px 0 @main_color, inset 0 0 16px 0 @main_color;
   width: 50vw;
-  height: 25vw;
+  height: 40vw;
   border-radius: 1vw;
   display: flex;
   flex-direction: column;
- // grid-template-columns: 1fr 1fr;
-//  grid-template-rows: 4fr 1fr;
 }

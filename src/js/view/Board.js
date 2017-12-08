@@ -16,6 +16,10 @@ export default class Board extends Component{
         this.cardFaces = icons();
     }
 
+    resetIcons() {
+        this.cardFaces = icons();
+    }
+
     openCard(i) {
         const spin = Styles.animations.spin;
         const card = this.cardsDOM[i];

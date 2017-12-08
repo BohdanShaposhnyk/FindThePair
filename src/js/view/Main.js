@@ -46,7 +46,10 @@ export default class Main extends Component {
         this.children.menu.update(this.menuProps());
         this.children.board.update(this.boardProps());
         this.children.modal.update(this.modalProps());
-        this.children.timer.update({parent : this.children.menu.children.timer.me, id : IDs.timer});
+        this.children.timer.update({
+            parent : this.children.menu.children.timer.me,
+            id : IDs.timer
+        });
         this.children.highscores.update({scores : []});
     }
 
@@ -72,7 +75,8 @@ export default class Main extends Component {
             handlers : {
                 changeSkin : this.state.handlers.changeSkin,
                 changeSize : this.state.handlers.changeSize,
-                newGameClick : this.state.handlers.newGameClick
+                newGameClick : this.state.handlers.newGameClick,
+                showHighscores : this.state.handlers.showHighscores
             }
         }
     }
@@ -85,10 +89,16 @@ export default class Main extends Component {
             finished : new GameFinishedModal({
                 id : IDs.gameFinishedModal,
                 parent : this.me,
+                handlers : {
+                    addHighscore : () => {this.state.handlers.addHighscore();},
+                    restartGame : () => {this.state.handlers.restartGame();},
+                    newGame : () => {this.state.handlers.newGameMenuClick();}
+                }
             }),
             highscores : new Highscores({
                 id : IDs.highscores,
                 parent : this.me,
+                size : this.state.layout.currentSize
             })
         };
         children.timer = new Timer({

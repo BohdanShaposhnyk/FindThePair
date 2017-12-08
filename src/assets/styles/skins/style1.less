@@ -1,17 +1,18 @@
-
+@main-color: rgb(223, 228, 227);
+@secondary: rgb(255, 113, 0);
 .board {
-  background-color: darken(#77ffff, 10%);
-  color: cyan;
+  background-color: darken(@main-color, 5%);
+  color: @secondary;
 }
 
 .back {
-  background-color: #77ffff !important;
+  background-color: darken(@main-color, 1%) !important;
   &:hover {
-    background-color: darken(#77ffff, 2%) !important;
+    background-color: darken(@main-color, 2%) !important;
   }
 }
 
 .bg {
-  background-color: darken(#77ffff, 50%);
+  background-color: darken(@main-color, 5%);
 
 }

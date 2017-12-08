@@ -74,6 +74,7 @@ export default class NewGame extends Component {
         containerChildren.newGameBtn.me.onclick = this.state.handlers.newGameClick;
         containerChildren.newGameBtn.me.innerHTML = 'START';
         containerChildren.scoresBtn.me.innerHTML = 'HIGH SCORES';
+        containerChildren.scoresBtn.me.onclick = this.state.handlers.showHighscores;
         container.children = containerChildren;
         container.renderChildren();
         return {container : container};

@@ -16,11 +16,12 @@ export default class HighscoresStorage {
     }
 
     addOne(entry) {
+        console.log(entry);
         const scores = this.scores.slice();
         scores.push(entry);
         if (scores.length > 0) {
             scores.sort( (a, b) => { return b.score - a.score;} );
-            if (scores.length > 30) scores.pop();
+            if (scores.length > 20) scores.pop();
         }
         this.scores = scores;
         localStorage.setItem('scores',  JSON.stringify(this.scores));

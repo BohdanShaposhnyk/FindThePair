@@ -29,13 +29,27 @@ export default class Highscores extends Component {
         }
     }
 
-    createScoreEntries() { //scores - [{player : playerName, score : score},{}...]
-        return this.state.scores.map( (score) => {
-            return `<div>${score.player} : ${score.score}</div>`
+    createScoreEntries() {
+        const title = `<div class="${layout.entry}">
+                        <div>&#8470;</div>
+                        <div>PLAYER</div>
+                        <div>SCORE</div>
+                        <div>LVL</div>
+                    </div>`;
+        const entries = this.state.scores.map( (score, i) => {
+            return `<div class="${layout.entry}">
+                        <div>${i+1}</div>
+                        <div>${score.player}</div>
+                        <div>${score.score}</div>
+                        <div>${score.size}</div>
+                    </div>`
         } );
+        entries.unshift(title);
+        return entries;
     }
 
     initChildren() {
+
         const container = new Component({
             parent : this.me,
             id : IDs.highscoresInternals.container
@@ -46,7 +60,7 @@ export default class Highscores extends Component {
     }
 
     render() {
-        this.children.container.me.innerHTML = '';
+        this.children.container.me.innerHTML = 'TOP 20';
         const entries = this.createScoreEntries();
         entries.forEach( (entry) => {
             this.children.container.me.innerHTML += entry;
