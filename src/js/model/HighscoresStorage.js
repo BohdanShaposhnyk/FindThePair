@@ -16,7 +16,6 @@ export default class HighscoresStorage {
     }
 
     addOne(entry) {
-        console.log(entry);
         const scores = this.scores.slice();
         scores.push(entry);
         if (scores.length > 0) {

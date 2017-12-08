@@ -49,12 +49,10 @@ export default class GameLogic {
     makeMove(i1, i2) {
         if (this.deck[i1] !==null && this.deck[i1] == this.deck[i2] && i1 !== i2) {
             this.deck[i2] = this.deck[i1] = null;
-            console.log('success');
             if (this.deck.every( card => { return card === null; } )) {
                 this.state = STATES.GAME_FINISHED;
             } else this.state = STATES.WIN;
         } else {
-            console.log('failure');
             this.state = STATES.LOSE;
             this.mistakes++;
         }
